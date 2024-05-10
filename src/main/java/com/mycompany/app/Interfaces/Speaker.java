@@ -5,5 +5,5 @@ public interface Speaker {
 
     String readInput();
 
-    String askQuestion(String Question);
+    char askQuestion(String Question);
 }

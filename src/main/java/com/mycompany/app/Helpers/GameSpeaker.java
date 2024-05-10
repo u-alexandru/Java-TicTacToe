@@ -14,8 +14,8 @@ public class GameSpeaker implements Speaker {
         return scanner.nextLine();
     }
 
-    public String askQuestion(String Question) {
+    public char askQuestion(String Question) {
         writeText(Question);
-        return readInput();
+        return readInput().charAt(0);
     }
 }

@@ -18,7 +18,7 @@ public class Game implements GameService {
     }
 
     @Override
-    public void startGame() {
+    public void startGame() throws Exception {
         this.setFirstToMove(ChoseStartingEntity.choseStartingEntity());
     }
 

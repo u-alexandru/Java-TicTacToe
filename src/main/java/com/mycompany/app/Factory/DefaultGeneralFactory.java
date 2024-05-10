@@ -38,6 +38,6 @@ public class DefaultGeneralFactory implements GeneralFactory {
 
     @Override
     public DeterminePlayerOrder createPlayOrder() {
-        return new ChoseFirstMoveEntity();
+        return new ChoseFirstMoveEntity(createSpeaker());
     }
 }

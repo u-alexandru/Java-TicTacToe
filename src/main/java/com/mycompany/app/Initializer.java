@@ -9,7 +9,7 @@ public class Initializer {
         this.gameService = gameService;
     }
 
-    public void init() {
+    public void init() throws Exception {
         this.gameService.startGame();
     }
 }

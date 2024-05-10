@@ -2,5 +2,5 @@ package com.mycompany.app.Interfaces;
 
 public interface GameService {
 
-    void startGame();
+    void startGame() throws Exception;
 }
