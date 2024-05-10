@@ -4,7 +4,9 @@ import com.mycompany.app.Interfaces.ChoseFirstMoveService;
 import com.mycompany.app.Interfaces.GameService;
 
 public class Game implements GameService {
+
     private char firstToMove = 'p';
+
     private final ChoseFirstMoveService ChoseStartingEntity;
 
     public Game(ChoseFirstMoveService ChoseStartingEntity) {
