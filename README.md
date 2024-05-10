@@ -1,2 +1,2 @@
-# Java-TrissGame
-My first Java project. A simple Triss Game where you can't beat the computer.
+# Java-TicTacToe
+My first Java project. A simple TicTacToe Game where you can't beat the computer.
