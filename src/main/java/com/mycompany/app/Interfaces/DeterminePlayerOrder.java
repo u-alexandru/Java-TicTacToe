@@ -1,5 +1,5 @@
 package com.mycompany.app.Interfaces;
 
-public interface ChoseFirstMoveService {
+public interface DeterminePlayerOrder {
     char choseStartingEntity();
 }

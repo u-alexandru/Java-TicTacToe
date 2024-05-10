@@ -1,6 +1,6 @@
 package com.mycompany.app.Interfaces;
 
-public interface GameSpeaker {
+public interface Speaker {
     void writeText(String text);
 
     String readInput();

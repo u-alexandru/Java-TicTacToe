@@ -1,10 +1,10 @@
 package com.mycompany.app.Helpers;
 
-import com.mycompany.app.Interfaces.GameSpeaker;
+import com.mycompany.app.Interfaces.Speaker;
 
 import java.util.Scanner;
 
-public class Speaker implements GameSpeaker {
+public class GameSpeaker implements Speaker {
     public void writeText(String textToWrite) {
         System.out.println(textToWrite);
     }

@@ -1,10 +1,6 @@
 package com.mycompany.app;
 
-import com.mycompany.app.Interfaces.Movable;
+import com.mycompany.app.Interfaces.Playable;
 
-public class Player implements Movable {
-
-    public void move() {
-
-    }
+public class Player implements Playable {
 }

@@ -1,5 +1,11 @@
 package com.mycompany.app;
 
-public class Move {
+import com.mycompany.app.Interfaces.Movable;
 
+public class Move implements Movable {
+
+    @Override
+    public void makeMove() {
+
+    }
 }

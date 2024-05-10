@@ -1,15 +1,15 @@
 package com.mycompany.app;
 
-import com.mycompany.app.Interfaces.ChoseFirstMoveService;
+import com.mycompany.app.Interfaces.DeterminePlayerOrder;
 import com.mycompany.app.Interfaces.GameService;
 
 public class Game implements GameService {
 
     private char firstToMove = 'p';
 
-    private final ChoseFirstMoveService ChoseStartingEntity;
+    private final DeterminePlayerOrder ChoseStartingEntity;
 
-    public Game(ChoseFirstMoveService ChoseStartingEntity) {
+    public Game(DeterminePlayerOrder ChoseStartingEntity) {
         this.ChoseStartingEntity = ChoseStartingEntity;
     }
 
