@@ -7,5 +7,11 @@ public interface GeneralFactory {
 
     Movable createMove();
 
+    Playable createComputer();
 
+    Playable createPlayer();
+
+    Board createGameboard();
+
+    DeterminePlayerOrder createPlayOrder();
 }
