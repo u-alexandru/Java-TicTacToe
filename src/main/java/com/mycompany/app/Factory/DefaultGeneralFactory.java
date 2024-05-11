@@ -6,6 +6,12 @@ import com.mycompany.app.Helpers.GameSpeaker;
 import com.mycompany.app.Interfaces.*;
 
 public class DefaultGeneralFactory implements GeneralFactory {
+    private final Board gameBoard;
+
+    public DefaultGeneralFactory() {
+        this.gameBoard = new Gameboard();
+    }
+
     @Override
     public Speaker createSpeaker() {
         return new GameSpeaker();
@@ -13,22 +19,22 @@ public class DefaultGeneralFactory implements GeneralFactory {
 
     @Override
     public GameService createGame() {
-        return new Game(createPlayOrder());
+        return new Game(createPlayOrder(), createSpeaker(), createGameTurn());
     }
 
     @Override
     public Movable createMove() {
-        return new Move();
+        return new Move(createPlayer(), createComputer());
     }
 
     @Override
     public Playable createComputer() {
-        return new Computer();
+        return new Computer(gameBoard);
     }
 
     @Override
     public Playable createPlayer() {
-        return new Player();
+        return new Player(gameBoard);
     }
 
     @Override
@@ -39,5 +45,10 @@ public class DefaultGeneralFactory implements GeneralFactory {
     @Override
     public DeterminePlayerOrder createPlayOrder() {
         return new ChoseFirstMoveEntity(createSpeaker());
+    }
+
+    @Override
+    public Turn createGameTurn() {
+        return new GameTurn(createGameboard(), createMove());
     }
 }

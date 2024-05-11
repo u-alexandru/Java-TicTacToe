@@ -14,4 +14,6 @@ public interface GeneralFactory {
     Board createGameboard();
 
     DeterminePlayerOrder createPlayOrder();
+
+    Turn createGameTurn();
 }
