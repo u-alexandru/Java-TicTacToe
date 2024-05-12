@@ -21,6 +21,22 @@ public class Gameboard implements Board {
 
     }
 
+    private void checkGameEnded(char[][] board) {
+        if(hasWon('X', getBoard())) {
+            drawBoard();
+            System.out.println("X has won the game!");
+            System.exit(0);
+        } else if(hasWon('O', getBoard())) {
+            drawBoard();
+            System.out.println("O has won the game!");
+            System.exit(0);
+        } else if(isDraw(getBoard())) {
+            drawBoard();
+            System.out.println("It's a draw! No winner!");
+            System.exit(0);
+        }
+    }
+
     public void placePiece(char piece, String destination) {
         int row = Character.getNumericValue(Character.toLowerCase(destination.charAt(0)));
         char column = Character.toLowerCase(destination.charAt(1));
@@ -34,6 +50,8 @@ public class Gameboard implements Board {
 
         piece = Character.toUpperCase(piece);
         board[row - 1][colNumber] = piece;
+
+        checkGameEnded(board);
     }
 
     public char[][] getBoard() {

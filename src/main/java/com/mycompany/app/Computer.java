@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Computer extends PlayerEntity {
 
     private final Board gameBoard;
-
+    private static final int MAX_DEPTH = 6;
     public Computer(Board gameBoard) {
         super(gameBoard);
         this.gameBoard = gameBoard;
@@ -16,22 +16,29 @@ public class Computer extends PlayerEntity {
 
     @Override
     public void move(char piece) {
-        MoveScore bestMoveScore = minimax(gameBoard.getBoard(), piece, true);
-        byte[] bestMove = bestMoveScore.move;
-        System.out.println(bestMove[0] + ", " + bestMove[1]);
-        String column = "A";
-        if(bestMove[1] == 1) {
-            column = "B";
-        } else if(bestMove[1] == 2) {
-            column = "C";
+        ArrayList<byte[]> availableMoves = gameBoard.availableMoves(gameBoard.getBoard());
+        if (availableMoves.size() == 9) {
+            // This is the first move
+            gameBoard.placePiece(piece, "2B");
+        } else {
+            boolean isMaximizing = true;
+            if(Character.toLowerCase(piece) == 'o') {
+                isMaximizing = false;
+            }
+            MoveScore bestMoveScore = minimax(gameBoard.getBoard(), piece, isMaximizing, 0);
+            byte[] bestMove = bestMoveScore.move;
+            String column = "A";
+            if(bestMove[1] == 1) {
+                column = "B";
+            } else if(bestMove[1] == 2) {
+                column = "C";
+            }
+            String destination = (bestMove[0] + 1) + column;
+            gameBoard.placePiece(piece, destination);
         }
-        String destination = (bestMove[0] + 1) + column;
-        System.out.println(destination);
-        gameBoard.placePiece(piece, destination);
-        // Now you can use bestMove to make the move
     }
 
-    public byte getMoveScore(char piece, char[][] boardState) {
+    public int getMoveScore(char piece, char[][] boardState, int depth) {
         char player = 'X';
         char computer = 'O';
         if(piece == 'O') {
@@ -40,22 +47,24 @@ public class Computer extends PlayerEntity {
         }
 
         if(gameBoard.hasWon(player, boardState)) {
-            return 10;
+            return 10 - depth;
         } else if(gameBoard.hasWon(computer, boardState)) {
-            return -10;
+            return -10 + depth;
         } else {
             return 0;
         }
     }
 
-    private MoveScore minimax(char[][] board, char piece, boolean isMaximizing) {
+    private MoveScore minimax(char[][] board, char piece, boolean isMaximizing, int depth) {
         char opponent = (piece == 'X') ? 'O' : 'X';
         if(gameBoard.hasWon(piece, board)) {
-            return new MoveScore(null, getMoveScore(piece, board));
+            return new MoveScore(null, getMoveScore(piece, board, depth));
         } else if(gameBoard.hasWon(opponent, board)) {
-            return new MoveScore(null, getMoveScore(opponent, board));
+            return new MoveScore(null, getMoveScore(opponent, board, depth));
         } else if(gameBoard.isDraw(board)) {
             return new MoveScore(null, 0);
+        } else if(depth >= MAX_DEPTH) {
+            return new MoveScore(null, getMoveScore(piece, board, depth));
         }
 
         ArrayList<byte[]> moves = gameBoard.availableMoves(board);
@@ -68,7 +77,7 @@ public class Computer extends PlayerEntity {
             }
             newBoardState[move[0]][move[1]] = piece;
 
-            MoveScore currentMoveScore = minimax(newBoardState, opponent, !isMaximizing);
+            MoveScore currentMoveScore = minimax(newBoardState, opponent, !isMaximizing, depth + 1);
             if(isMaximizing) {
                 if(currentMoveScore.score > bestMoveScore.score) {
                     bestMoveScore = new MoveScore(move, currentMoveScore.score);
