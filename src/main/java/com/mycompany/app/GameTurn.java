@@ -10,6 +10,7 @@ public class GameTurn implements Turn {
     private final Movable move;
     private char turnToMove = 'p';
     private char playerPiece = 'x';
+    private char computerPiece = 'o';
 
     public GameTurn(Board gameboard, Movable move) {
         this.gameboard = gameboard;
@@ -19,6 +20,9 @@ public class GameTurn implements Turn {
     @Override
     public void setPlayerPiece(char playerPiece) {
         this.playerPiece = playerPiece;
+        if(playerPiece == 'o') {
+            computerPiece = 'x';
+        }
     }
 
     public void setTurnToMove(char turnToMove) {
@@ -30,7 +34,7 @@ public class GameTurn implements Turn {
             move.playerMove(playerPiece);
             turnToMove = 'c';
         } else {
-            move.computerMove(playerPiece);
+            move.computerMove(computerPiece);
             turnToMove = 'p';
         }
     }

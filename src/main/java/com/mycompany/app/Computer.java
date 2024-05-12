@@ -1,5 +1,6 @@
 package com.mycompany.app;
 
+import com.mycompany.app.Helpers.MoveScore;
 import com.mycompany.app.Interfaces.Board;
 
 import java.util.ArrayList;
@@ -15,7 +16,19 @@ public class Computer extends PlayerEntity {
 
     @Override
     public void move(char piece) {
-        System.out.println(minimax(gameBoard.getBoard(), piece, true));
+        MoveScore bestMoveScore = minimax(gameBoard.getBoard(), piece, true);
+        byte[] bestMove = bestMoveScore.move;
+        System.out.println(bestMove[0] + ", " + bestMove[1]);
+        String column = "A";
+        if(bestMove[1] == 1) {
+            column = "B";
+        } else if(bestMove[1] == 2) {
+            column = "C";
+        }
+        String destination = (bestMove[0] + 1) + column;
+        System.out.println(destination);
+        gameBoard.placePiece(piece, destination);
+        // Now you can use bestMove to make the move
     }
 
     public byte getMoveScore(char piece, char[][] boardState) {
@@ -35,20 +48,19 @@ public class Computer extends PlayerEntity {
         }
     }
 
-    private int minimax(char[][] board, char piece, boolean isMaximizing) {
+    private MoveScore minimax(char[][] board, char piece, boolean isMaximizing) {
         char opponent = (piece == 'X') ? 'O' : 'X';
         if(gameBoard.hasWon(piece, board)) {
-            return getMoveScore(piece, board);
+            return new MoveScore(null, getMoveScore(piece, board));
         } else if(gameBoard.hasWon(opponent, board)) {
-            return getMoveScore(opponent, board);
+            return new MoveScore(null, getMoveScore(opponent, board));
         } else if(gameBoard.isDraw(board)) {
-            return 0;
+            return new MoveScore(null, 0);
         }
 
         ArrayList<byte[]> moves = gameBoard.availableMoves(board);
 
-        int bestScore = isMaximizing ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-
+        MoveScore bestMoveScore = new MoveScore(null, isMaximizing ? Integer.MIN_VALUE : Integer.MAX_VALUE);
         for(byte[] move : moves) {
             char[][] newBoardState = new char[3][3];
             for (int i = 0; i < board.length; i++) {
@@ -56,12 +68,19 @@ public class Computer extends PlayerEntity {
             }
             newBoardState[move[0]][move[1]] = piece;
 
-            int score = minimax(newBoardState, opponent, !isMaximizing);
-            bestScore = isMaximizing ? Math.max(score, bestScore) : Math.min(score, bestScore);
+            MoveScore currentMoveScore = minimax(newBoardState, opponent, !isMaximizing);
+            if(isMaximizing) {
+                if(currentMoveScore.score > bestMoveScore.score) {
+                    bestMoveScore = new MoveScore(move, currentMoveScore.score);
+                }
+            } else {
+                if(currentMoveScore.score < bestMoveScore.score) {
+                    bestMoveScore = new MoveScore(move, currentMoveScore.score);
+                }
+            }
         }
 
-        return bestScore;
-
+        return bestMoveScore;
     }
 
 
