@@ -13,22 +13,5 @@ public class Player extends PlayerEntity {
     }
 
     @Override
-    public void move(char piece) {
-
-    }
-
-    public boolean validMove(String move) {
-        char[][] myBoard = gameBoard.getBoard();
-        int row = Character.getNumericValue(move.charAt(0));
-        char column = Character.toLowerCase(move.charAt(1));
-
-        int colNumber = 0;
-        if(column == 'b') {
-            colNumber = 1;
-        }else if(column == 'c') {
-            colNumber = 2;
-        }
-
-        return myBoard[row - 1][colNumber] == ' ';
-    }
+    public void move(char piece) {}
 }

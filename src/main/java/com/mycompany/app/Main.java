@@ -1,8 +1,6 @@
 package com.mycompany.app;
 
 import com.mycompany.app.Factory.DefaultGeneralFactory;
-import com.mycompany.app.Helpers.ChoseFirstMoveEntity;
-import com.mycompany.app.Interfaces.DeterminePlayerOrder;
 import com.mycompany.app.Interfaces.GameService;
 import com.mycompany.app.Interfaces.GeneralFactory;
 
